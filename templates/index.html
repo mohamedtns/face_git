@@ -107,7 +107,7 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.message === "Capture completed.") {
+                    if (data.success) {
                         console.log(`Class ${className} captured successfully.`);
                         currentClassIndex++;
                         if (currentClassIndex < classNames.length) {
@@ -116,7 +116,7 @@
                             document.getElementById('capture-message').textContent = "Capture completed!";
                         }
                     } else {
-                        console.error(`Error capturing class ${className}:`, data);
+                        alert(data.message);
                     }
                 })
                 .catch(error => alert("Error: " + error));
@@ -150,8 +150,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message);
-                document.getElementById('prediction').textContent = "Prediction started...";
+                if (data.success) {
+                    document.getElementById('prediction').textContent = "Prediction started...";
+                } else {
+                    alert(data.message);
+                }
             });
         });
 
